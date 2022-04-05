@@ -1,3 +1,55 @@
-<p>
-  category-form works!
-</p>
+<nav class="mb-3">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a routerLink="/">Home</a>
+    </li>
+    <li class="breadcrumb-item">
+      <a routerLink="/categories">Categorias</a>
+    </li>
+    <li class="breadcrumb-item active">
+      <span *ngIf="category.name">{{category.name}}</span>
+      <span *ngIf="!category.name">Nova Categoria</span>
+    </li>
+  </ol>
+</nav>
+
+<div class="row mb-3">
+  <div class="col-md">
+    <h1 class="h2 border-left pl-2">{{pageTitle}}</h1>
+  </div>
+  <div class="col-md">
+    <a routerLink="new"  class="btn btn-light right">Voltar</a>
+  </div>
+</div>
+
+<form [formGroup]="categoryForm" (submit)="submitForm()">
+  <div class="card">
+    <div class="card-header">
+      Informações sobre a Categoria
+    </div>
+    <div class="card-body">
+      <div class="d-flex flex-row">
+        <div class="form-group col-md-4">
+          <label for="name">Nome</label>
+          <input type="text" class="form-control" formControlName="name" id="name" placeholder="Nome da Categoria">
+
+          <div class="text-danger" *ngIf="categoryForm.get('name').invalid && categoryForm.get('name').touched">
+            <div *ngIf="categoryForm.get('name').errors.required">Dados obrigatórios</div>
+            <div *ngIf="categoryForm.get('name').errors.minlength">Deve ter no mínimo 2 caracteres</div>
+          </div>
+        </div>
+        <div class="form-group col-md-8">
+          <label for="description">Descrição</label>
+          <input type="text" class="form-control" formControlName="description" id="description">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="alert alert-danger mt-4" *ngIf="serverErrorMessages">
+    <strong>Erro no Servidor:</strong><br>
+    <ul>
+      <li *ngFor=""let error of serverErrorMessages>{{error}}</li>
+    </ul>
+  </div>
+  <button [disabled]="submittingForm || categoryForm.invalid" type="submit" class="btn btn-primary btn-lg right mt-3">Salvar</button>
+</form>
