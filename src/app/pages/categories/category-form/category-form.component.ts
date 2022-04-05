@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterContentChecked } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Category} from '../shared/category.model';
@@ -38,12 +38,10 @@ export class CategoryFormComponent implements OnInit, AfterContentChecked {
 
   ngAfterContentChecked() {
     this.setPageTitle();
-
   }
 
   submitForm() {
     this.submittingForm = true;
-
     if (this.currentAction == 'new') {
       this.createCategory();
     } else {
@@ -131,7 +129,9 @@ export class CategoryFormComponent implements OnInit, AfterContentChecked {
     if (error.status === 422) {
       this.serverErrorMessages = JSON.parse(error._body).errors;
     } else {
-      this.serverErrorMessages = ['Falha na comunicação com o servidor. Por favor, tente mais tarde.'];
+      this.serverErrorMessages = [
+        'Falha na comunicação com o servidor. Por favor, tente mais tarde.'
+      ];
     }
   }
 
