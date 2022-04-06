@@ -19,7 +19,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     AppRoutingModule,
     HttpClientModule,
     FormsModule, ReactiveFormsModule,
-    HttpClientInMemoryWebApiModule.forRoot(InMemoryDatabase) // Banco Temporário
+    HttpClientInMemoryWebApiModule.forRoot(InMemoryDatabase), // Banco Temporário
   ],
   providers: [],
   bootstrap: [AppComponent]
