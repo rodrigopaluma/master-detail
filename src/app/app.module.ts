@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 // Banco Temporário
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDatabase } from './in-memory-database';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { InMemoryDatabase } from './in-memory-database';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    FormsModule, ReactiveFormsModule,
     HttpClientInMemoryWebApiModule.forRoot(InMemoryDatabase) // Banco Temporário
   ],
   providers: [],
