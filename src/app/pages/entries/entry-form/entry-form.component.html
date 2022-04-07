@@ -22,26 +22,26 @@
   </div>
 </div>
 
-<form formGroup="entryForm" (submit)="submitForm()">
+<form [formGroup]="entryForm" (submit)="submitForm()">
   <div class="card">
     <div class="card-header">
       Informações sobre o Lançamento
     </div>
     <div class="card-body">
-      <div class="d-flex flex-row">
+      <!--Linha 1-->
+      <div class="d-flex flex-row mb-3">
         <!--Tipo-->
         <div class="form-group col-md-4 ajuste">
           <label for="type">Tipo</label>
           <select class="form-control ajuste" name="type" formControlName="type" id="type">
-            <option value="">Selecione</option>
-            <option value="income">Receita</option>
-            <option value="outcome">Despesa</option>
+            <option *ngFor="let option of typeOptions" [value]="option.value">{{option.text}}</option>
           </select>
 
           <div class="text-danger" *ngIf="entryForm.get('type').invalid && entryForm.get('type').touched">
-            <div *ngIf="entryForm.get('name').errors.required">Dados obrigatórios</div>
+            <div *ngIf="entryForm.get('type').errors.required">Dados obrigatórios</div>
           </div>
         </div>
+
         <!--Nome-->
         <div class="form-group col-md-4">
           <label for="name">Lançamento</label>
@@ -52,12 +52,76 @@
             <div *ngIf="entryForm.get('name').errors.minlength">Deve ter no mínimo 2 caracteres</div>
           </div>
         </div>
+
+        <!--Valor-->
+        <div class="form-group col-md-4">
+          <label for="amount">Valor</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                R$
+              </div>
+            </div>
+            <input type="text" class="form-control" formControlName="amount" id="amount" placeholder="Informe o valor">
+          </div>
+
+          <div class="text-danger" *ngIf="entryForm.get('amount').invalid && entryForm.get('amount').touched">
+            <div *ngIf="entryForm.get('amount').errors.required">Dados obrigatórios</div>
+          </div>
+        </div>
+      </div>
+      <!--Linha 2-->
+      <div class="d-flex flex-row mb-3">
+        <!--Data-->
+        <div class="form-group col-md-4">
+          <label for="date">Data</label>
+          <p-calendar
+            [inputStyle]="{'width': '100%', 'border': 'none', 'cursor': 'pointer', 'text-align': 'right'}"
+            id="date"
+            formControlName="date"
+            inputStyleClass="form-control"
+            dataType="string"
+            dateFormat="dd/mm/yy"
+            [locale]="ptBR"
+            [showButtonBar]="true">
+          </p-calendar>
+          <div class="text-danger" *ngIf="entryForm.get('date').invalid && entryForm.get('date').touched">
+            <div *ngIf="entryForm.get('date').errors.required">Dados obrigatórios</div>
+          </div>
+        </div>
+        <!--Pago-->
+        <div class="form-group col-md-4">
+          <label for="paid">Pago</label>
+          <div class="btn-group" [style.margin-left]="'10px'">
+            <label (click)="entryForm.get('paid').setValue(true)" [class.active]="entryForm.get('paid').value == true" class="btn btn-outline-info">
+              Pago
+            </label>
+            <label (click)="entryForm.get('paid').setValue(false)" [class.active]="entryForm.get('paid').value == false" class="btn btn-outline-info">
+              Pendente
+            </label>
+          </div>
+          <div class="text-danger" *ngIf="entryForm.get('paid').invalid && entryForm.get('paid').touched">
+            <div *ngIf="entryForm.get('paid').errors.required">Dados obrigatórios</div>
+          </div>
+        </div>
+        <!--Categoria-->
+        <div class="form-group col-md-4 ajuste">
+          <label for="categoryId">Categoria</label>
+          <select class="form-control ajuste" name="categoryId" formControlName="categoryId" id="categoryId">
+            <option *ngFor="let category of categories" [value]="category.id">{{category.name}}</option>
+          </select>
+
+          <div class="text-danger" *ngIf="entryForm.get('categoryId').invalid && entryForm.get('categoryId').touched">
+            <div *ngIf="entryForm.get('categoryId').errors.required">Dados obrigatórios</div>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex flex-row">
         <!--Descrição-->
         <div class="form-group col-md-4">
           <label for="description">Descrição</label>
           <input type="text" class="form-control" formControlName="description" id="description">
         </div>
-
       </div>
     </div>
   </div>
