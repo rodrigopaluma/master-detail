@@ -7,8 +7,8 @@
       <a routerLink="/categories">Categorias</a>
     </li>
     <li class="breadcrumb-item active">
-      <span *ngIf="category.name">{{category.name}}</span>
-      <span *ngIf="!category.name">Nova Categoria</span>
+      <span *ngIf="resource.name">{{resource.name}}</span>
+      <span *ngIf="!resource.name">Nova Categoria</span>
     </li>
   </ol>
 </nav>
@@ -22,7 +22,7 @@
   </div>
 </div>
 
-<form [formGroup]="categoryForm" (submit)="submitForm()">
+<form [formGroup]="resourceForm" (submit)="submitForm()">
   <div class="card">
     <div class="card-header">
       Informações sobre a Categoria
@@ -33,9 +33,9 @@
           <label for="name">Nome</label>
           <input type="text" class="form-control" formControlName="name" id="name" placeholder="Nome da Categoria">
 
-          <div class="text-danger" *ngIf="categoryForm.get('name').invalid && categoryForm.get('name').touched">
-            <div *ngIf="categoryForm.get('name').errors.required">Dados obrigatórios</div>
-            <div *ngIf="categoryForm.get('name').errors.minlength">Deve ter no mínimo 2 caracteres</div>
+          <div class="text-danger" *ngIf="resourceForm.get('name').invalid && resourceForm.get('name').touched">
+            <div *ngIf="resourceForm.get('name').errors.required">Dados obrigatórios</div>
+            <div *ngIf="resourceForm.get('name').errors.minlength">Deve ter no mínimo 2 caracteres</div>
           </div>
         </div>
         <div class="form-group col-md-8">
@@ -51,5 +51,5 @@
       <li *ngFor=""let error of serverErrorMessages>{{error}}</li>
     </ul>
   </div>
-  <button [disabled]="submittingForm || categoryForm.invalid" type="submit" class="btn btn-primary btn-lg right mt-3">Salvar</button>
+  <button [disabled]="submittingForm || resourceForm.invalid" type="submit" class="btn btn-primary btn-lg right mt-3">Salvar</button>
 </form>
