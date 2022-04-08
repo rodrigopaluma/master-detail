@@ -3,7 +3,7 @@ import { Entry } from './entry.model';
 import { CategoryService } from '../../categories/shared/category.service';
 import { BaseResourceService } from 'src/app/shared/services/base-resource.service';
 import { Observable } from 'rxjs';
-import { flatMap } from 'rxjs/operators';
+import { catchError, flatMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -16,24 +16,22 @@ export class EntryService extends BaseResourceService<Entry> {
 
   // Cria uma Entrada
   create(entry: Entry): Observable<Entry> {
-    // Atrelando obj Category ao obj Entry
-    return this.categoryService.getById(entry.categoryId).pipe(
-      flatMap(category => {
-        // Atrelou o obj Category ao obj Entry
-        entry.category = category;
-        // Chama o método create da classe BaseResourceService
-        return super.create(entry);
-      })
-    );
+    return this.setCategoryAndSendToServer(entry, super.create.bind(this));
   }
 
   // Atualiza uma Entrada
   update(entry: Entry): Observable<Entry> {
+    return this.setCategoryAndSendToServer(entry, super.update.bind(this));
+  }
+
+  // Verifica a Categoria e envia ao servidor
+  private setCategoryAndSendToServer(entry: Entry, sendFn: any): Observable<Entry>{
     return this.categoryService.getById(entry.categoryId).pipe(
       flatMap(category => {
-        entry.category = category;
-        return super.update(entry);
-      })
+        entry.category = category; // Atrelou o obj Category ao obj Entry
+        return sendFn(entry); // Chama o método create da classe BaseResourceService
+      }),
+      catchError(this.handleError)
     );
   }
 
