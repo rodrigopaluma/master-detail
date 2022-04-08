@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterContentChecked, Injector } from '@angular/core';
+import { OnInit, AfterContentChecked, Injector } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
@@ -7,10 +7,6 @@ import { BaseResourceModel } from '../../models/base-resource.model'
 import { BaseResourceService } from '../../services/base-resource.service'
 
 import toastr from 'toastr';
-
-@Component({
-  template: ''
-})
 
 export abstract class BaseResourceFormComponent<T extends BaseResourceModel> implements OnInit, AfterContentChecked {
 
