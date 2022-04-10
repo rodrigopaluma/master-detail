@@ -1,17 +1,4 @@
-<nav class="mb-3">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item">
-      <a routerLink="/">Home</a>
-    </li>
-    <li class="breadcrumb-item">
-      <a routerLink="/categories">Categorias</a>
-    </li>
-    <li class="breadcrumb-item active">
-      <span *ngIf="resource.name">{{resource.name}}</span>
-      <span *ngIf="!resource.name">Nova Categoria</span>
-    </li>
-  </ol>
-</nav>
+<app-bread-crumb [items]="[{ label: 'Categorias', link: '/categories'},{ label: pageTitle}]"></app-bread-crumb>
 
 <div class="row mb-3">
   <div class="col-md">

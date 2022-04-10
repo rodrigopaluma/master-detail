@@ -12,7 +12,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class CategoryFormComponent extends BaseResourceFormComponent<Category> {
 
-  constructor(protected categoryService: CategoryService,protected injector: Injector, protected route: ActivatedRoute, protected router: Router) {
+  constructor(protected categoryService: CategoryService,
+              protected injector: Injector,
+              protected route: ActivatedRoute,
+              protected router: Router) {
     super(injector, new Category(), categoryService, Category.fromJson);
   }
 
